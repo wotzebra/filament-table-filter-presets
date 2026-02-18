@@ -3,6 +3,7 @@
 namespace Wotz\FilamentTableFilterPresets\Concerns;
 
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -52,16 +53,29 @@ trait HasSavedTableFilters
         $this->redirect(static::getUrl(), navigate: true);
     }
 
+    protected function getFilterActionsGroup(): ActionGroup
+    {
+        return ActionGroup::make([
+            $this->getSavedFilterAction(),
+            $this->getLoadFilterAction(),
+            $this->getDeleteFilterAction(),
+        ])
+            ->button()
+            ->label(__('filament-table-filter-presets::filters.actions'))
+            ->icon('heroicon-m-ellipsis-vertical');
+    }
+
     protected function getSavedFilterAction(): Action
     {
         return Action::make('saveFilter')
-            ->label('Save Filter')
+            ->label(__('filament-table-filter-presets::filters.save'))
             ->form([
                 TextInput::make('name')
+                    ->label(__('filament-table-filter-presets::filters.name'))
                     ->required()
                     ->maxLength(255),
                 Toggle::make('is_default')
-                    ->label('Set as default'),
+                    ->label(__('filament-table-filter-presets::filters.set_as_default')),
             ])
             ->action(function (array $data): void {
                 $resource = $this->getResourceClass();
@@ -87,7 +101,7 @@ trait HasSavedTableFilters
                 );
 
                 Notification::make()
-                    ->title('Filter saved')
+                    ->title(__('filament-table-filter-presets::filters.filter_saved'))
                     ->success()
                     ->send();
             });
@@ -96,10 +110,10 @@ trait HasSavedTableFilters
     protected function getLoadFilterAction(): Action
     {
         return Action::make('loadFilter')
-            ->label('Load Filter')
+            ->label(__('filament-table-filter-presets::filters.load'))
             ->form([
                 Select::make('saved_filter_id')
-                    ->label('Saved Filter')
+                    ->label(__('filament-table-filter-presets::filters.saved_filter'))
                     ->options(fn () => SavedTableFilter::query()
                         ->where('administrator_id', auth()->id())
                         ->where('resource', $this->getResourceClass())
@@ -121,11 +135,11 @@ trait HasSavedTableFilters
     protected function getDeleteFilterAction(): Action
     {
         return Action::make('deleteFilter')
-            ->label('Delete Filter')
+            ->label(__('filament-table-filter-presets::filters.delete'))
             ->color('danger')
             ->form([
                 Select::make('saved_filter_id')
-                    ->label('Saved Filter')
+                    ->label(__('filament-table-filter-presets::filters.saved_filter'))
                     ->options(fn () => SavedTableFilter::query()
                         ->where('administrator_id', auth()->id())
                         ->where('resource', $this->getResourceClass())
@@ -140,7 +154,7 @@ trait HasSavedTableFilters
                     ->delete();
 
                 Notification::make()
-                    ->title('Filter deleted')
+                    ->title(__('filament-table-filter-presets::filters.filter_deleted'))
                     ->success()
                     ->send();
             });

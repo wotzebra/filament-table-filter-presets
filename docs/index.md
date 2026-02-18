@@ -55,6 +55,17 @@ class ListOrders extends ListRecords
 }
 ```
 
+Alternatively, you can use `getFilterActionsGroup()` to render all three actions inside a single dropdown button:
+
+```php
+protected function getHeaderActions(): array
+{
+    return [
+        $this->getFilterActionsGroup(),
+    ];
+}
+```
+
 This gives you three header actions:
 
 - **Save Filter** — Saves the current table filter state under a name. You can optionally mark it as the default preset.

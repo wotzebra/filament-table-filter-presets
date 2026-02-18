@@ -4,7 +4,6 @@ namespace Wotz\FilamentTableFilterPresets;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Wotz\FilamentTableFilterPresets\Commands\FilamentTableFilterPresetsCommand;
 
 class FilamentTableFilterPresetsServiceProvider extends PackageServiceProvider
 {

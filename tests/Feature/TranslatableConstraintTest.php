@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Database\Eloquent\Builder;
 use Workbench\App\Models\User;
 use Wotz\FilamentTableFilterPresets\QueryBuilder\Constraints\Operators\TranslatableContainsOperator;
 use Wotz\FilamentTableFilterPresets\QueryBuilder\Constraints\Operators\TranslatableEndsWithOperator;

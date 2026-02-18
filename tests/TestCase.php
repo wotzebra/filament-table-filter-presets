@@ -19,6 +19,7 @@ use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 use Workbench\App\Providers\Filament\AdminPanelProvider;
 use Wotz\FilamentTableFilterPresets\FilamentTableFilterPresetsServiceProvider;
+use Wotz\LocaleCollection\Providers\LocaleCollectionServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -48,6 +49,7 @@ class TestCase extends Orchestra
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
             AdminPanelProvider::class,
+            LocaleCollectionServiceProvider::class,
             FilamentTableFilterPresetsServiceProvider::class,
         ];
 

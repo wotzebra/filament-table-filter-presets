@@ -7,6 +7,9 @@
 
 Add the HasSavedTableFilters trait to any ListRecords page to get Save, Load, and Delete header actions. Filter presets are scoped per user and per resource, stored as JSON, and persisted via a single saved_table_filters table.
 
+![filters.png](docs/filters.png)
+![save-filters.png](docs/save-filters.png)
+
 ## Installation
 
 You can install the package via composer:

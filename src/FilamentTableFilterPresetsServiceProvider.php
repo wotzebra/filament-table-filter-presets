@@ -17,7 +17,6 @@ class FilamentTableFilterPresetsServiceProvider extends PackageServiceProvider
         $package
             ->name('filament-table-filter-presets')
             ->hasConfigFile()
-            ->hasViews()
             ->hasTranslations()
             ->hasMigration('create_filament_table_filter_presets_table');
     }

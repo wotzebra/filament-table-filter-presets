@@ -13,7 +13,17 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'title',
+        'is_active',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'title' => 'json',
+            'is_active' => 'json',
+        ];
+    }
 
     protected static function newFactory(): \Workbench\Database\Factories\UserFactory
     {

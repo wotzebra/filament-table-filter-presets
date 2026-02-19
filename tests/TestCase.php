@@ -19,6 +19,7 @@ use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 use Workbench\App\Providers\Filament\AdminPanelProvider;
 use Wotz\FilamentTableFilterPresets\FilamentTableFilterPresetsServiceProvider;
+use Wotz\LocaleCollection\Providers\LocaleCollectionServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -48,6 +49,7 @@ class TestCase extends Orchestra
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
             AdminPanelProvider::class,
+            LocaleCollectionServiceProvider::class,
             FilamentTableFilterPresetsServiceProvider::class,
         ];
 
@@ -60,6 +62,7 @@ class TestCase extends Orchestra
     {
         config()->set('app.key', 'base64:'.base64_encode(random_bytes(32)));
         config()->set('database.default', 'testing');
+        config()->set('cache.default', 'array');
         config()->set('session.driver', 'array');
         config()->set('filament-table-filter-presets.administrator_model', \Workbench\App\Models\User::class);
         config()->set('auth.providers.users.model', \Workbench\App\Models\User::class);
@@ -69,6 +72,8 @@ class TestCase extends Orchestra
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->json('title')->nullable();
+            $table->json('is_active')->nullable();
             $table->timestamps();
         });
 

@@ -2,6 +2,14 @@
 
 All notable changes to `filament-table-filter-presets` will be documented in this file.
 
+## v0.3.0 - 2026-02-19
+
+### What's Changed
+
+* Add translatable constraints for text and booleans by @jyrkidn in https://github.com/wotzebra/filament-table-filter-presets/pull/2
+
+**Full Changelog**: https://github.com/wotzebra/filament-table-filter-presets/compare/v0.2.0...v0.3.0
+
 ## v0.2.0 - 2026-02-18
 
 ### What's Changed

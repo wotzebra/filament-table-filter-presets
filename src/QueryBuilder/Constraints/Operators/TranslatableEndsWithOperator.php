@@ -28,9 +28,8 @@ class TranslatableEndsWithOperator extends EndsWithOperator
     {
         $text = trim($this->getSettings()['text']);
 
-        return $query->{$this->isInverse() ? 'whereNot' : 'where'}(
+        return $query->{$this->isInverse() ? 'whereNotLike' : 'whereLike'}(
             $this->getTranslatableColumn($qualifiedColumn),
-            'like',
             "%{$text}",
         );
     }

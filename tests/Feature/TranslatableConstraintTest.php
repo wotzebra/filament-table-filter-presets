@@ -148,6 +148,17 @@ it('trims whitespace from text operator input', function () {
     expect($results)->toBe(['Alice', 'Charlie']);
 });
 
+it('escapes LIKE wildcards in text input', function () {
+    User::create(['name' => 'Wildcard', 'email' => 'wild@example.com', 'password' => 'secret', 'title' => ['en' => '100% done', 'nl' => 'test'], 'is_active' => ['en' => true, 'nl' => true]]);
+
+    $operator = TranslatableContainsOperator::make()
+        ->settings(['locale' => 'en', 'text' => '100%']);
+
+    $results = $operator->apply(User::query(), 'title')->pluck('name')->all();
+
+    expect($results)->toBe(['Wildcard']);
+});
+
 it('queries the correct locale', function () {
     $operatorEn = TranslatableIsTrueOperator::make()
         ->settings(['locale' => 'en']);

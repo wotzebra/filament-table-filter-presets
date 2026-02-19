@@ -62,6 +62,7 @@ class TestCase extends Orchestra
     {
         config()->set('app.key', 'base64:'.base64_encode(random_bytes(32)));
         config()->set('database.default', 'testing');
+        config()->set('cache.default', 'array');
         config()->set('session.driver', 'array');
         config()->set('filament-table-filter-presets.administrator_model', \Workbench\App\Models\User::class);
         config()->set('auth.providers.users.model', \Workbench\App\Models\User::class);

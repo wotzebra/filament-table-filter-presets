@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Database\Eloquent\Builder;
 use Workbench\App\Models\User;
 use Wotz\FilamentTableFilterPresets\QueryBuilder\Constraints\Operators\TranslatableContainsOperator;
 use Wotz\FilamentTableFilterPresets\QueryBuilder\Constraints\Operators\TranslatableEndsWithOperator;
@@ -15,6 +14,10 @@ use Wotz\LocaleCollection\Locale;
 beforeEach(function () {
     LocaleCollection::push(new Locale('en'));
     LocaleCollection::push(new Locale('nl'));
+
+    User::create(['name' => 'Alice', 'email' => 'alice@example.com', 'password' => 'secret', 'title' => ['en' => 'Hello World', 'nl' => 'Hallo Wereld'], 'is_active' => ['en' => true, 'nl' => false]]);
+    User::create(['name' => 'Bob', 'email' => 'bob@example.com', 'password' => 'secret', 'title' => ['en' => 'Goodbye Moon', 'nl' => 'Tot ziens Maan'], 'is_active' => ['en' => false, 'nl' => true]]);
+    User::create(['name' => 'Charlie', 'email' => 'charlie@example.com', 'password' => 'secret', 'title' => ['en' => 'Hello There', 'nl' => 'Hallo Daar'], 'is_active' => ['en' => true, 'nl' => true]]);
 });
 
 it('registers the correct operators on TranslatableTextConstraint', function () {
@@ -40,96 +43,79 @@ it('registers the correct operator on TranslatableBooleanConstraint', function (
     ]);
 });
 
-it('contains operator generates correct SQL', function () {
+it('contains operator filters matching records', function () {
     $operator = TranslatableContainsOperator::make()
-        ->settings(['locale' => 'en', 'text' => 'hello']);
+        ->settings(['locale' => 'en', 'text' => 'Hello']);
 
-    $query = $operator->apply(User::query(), 'users.title');
+    $results = $operator->apply(User::query(), 'title')->pluck('name')->all();
 
-    expect($query->toRawSql())
-        ->toContain("JSON_UNQUOTE(JSON_EXTRACT(users.title, '$.en'))")
-        ->toContain("like '%hello%'");
+    expect($results)->toBe(['Alice', 'Charlie']);
 });
 
-it('contains operator generates inverse SQL', function () {
+it('contains operator inverse excludes matching records', function () {
     $operator = TranslatableContainsOperator::make()
-        ->settings(['locale' => 'nl', 'text' => 'hallo'])
+        ->settings(['locale' => 'en', 'text' => 'Hello'])
         ->inverse();
 
-    $query = $operator->apply(User::query(), 'users.title');
+    $results = $operator->apply(User::query(), 'title')->pluck('name')->all();
 
-    expect($query->toRawSql())
-        ->toContain("JSON_UNQUOTE(JSON_EXTRACT(users.title, '$.nl'))")
-        ->toContain('not')
-        ->toContain("like '%hallo%'");
+    expect($results)->toBe(['Bob']);
 });
 
-it('starts with operator generates correct SQL', function () {
+it('starts with operator filters matching records', function () {
     $operator = TranslatableStartsWithOperator::make()
-        ->settings(['locale' => 'en', 'text' => 'hello']);
+        ->settings(['locale' => 'nl', 'text' => 'Hallo']);
 
-    $query = $operator->apply(User::query(), 'users.title');
+    $results = $operator->apply(User::query(), 'title')->pluck('name')->all();
 
-    expect($query->toRawSql())
-        ->toContain("JSON_UNQUOTE(JSON_EXTRACT(users.title, '$.en'))")
-        ->toContain("like 'hello%'");
+    expect($results)->toBe(['Alice', 'Charlie']);
 });
 
-it('ends with operator generates correct SQL', function () {
+it('ends with operator filters matching records', function () {
     $operator = TranslatableEndsWithOperator::make()
-        ->settings(['locale' => 'en', 'text' => 'world']);
+        ->settings(['locale' => 'en', 'text' => 'Moon']);
 
-    $query = $operator->apply(User::query(), 'users.title');
+    $results = $operator->apply(User::query(), 'title')->pluck('name')->all();
 
-    expect($query->toRawSql())
-        ->toContain("JSON_UNQUOTE(JSON_EXTRACT(users.title, '$.en'))")
-        ->toContain("like '%world'");
+    expect($results)->toBe(['Bob']);
 });
 
-it('equals operator generates correct SQL', function () {
+it('equals operator filters exact match', function () {
     $operator = TranslatableEqualsOperator::make()
         ->settings(['locale' => 'en', 'text' => 'Hello World']);
 
-    $query = $operator->apply(User::query(), 'users.title');
+    $results = $operator->apply(User::query(), 'title')->pluck('name')->all();
 
-    expect($query->toRawSql())
-        ->toContain("JSON_UNQUOTE(JSON_EXTRACT(users.title, '$.en'))")
-        ->toContain("'Hello World'");
+    expect($results)->toBe(['Alice']);
 });
 
-it('equals operator generates inverse SQL', function () {
+it('equals operator inverse excludes exact match', function () {
     $operator = TranslatableEqualsOperator::make()
-        ->settings(['locale' => 'nl', 'text' => 'Hallo Wereld'])
+        ->settings(['locale' => 'en', 'text' => 'Hello World'])
         ->inverse();
 
-    $query = $operator->apply(User::query(), 'users.title');
+    $results = $operator->apply(User::query(), 'title')->pluck('name')->all();
 
-    expect($query->toRawSql())
-        ->toContain("JSON_UNQUOTE(JSON_EXTRACT(users.title, '$.nl'))")
-        ->toContain('not');
+    expect($results)->toBe(['Bob', 'Charlie']);
 });
 
-it('is true operator generates correct SQL', function () {
+it('is true operator filters truthy records', function () {
     $operator = TranslatableIsTrueOperator::make()
         ->settings(['locale' => 'en']);
 
-    $query = $operator->apply(User::query(), 'users.is_active');
+    $results = $operator->apply(User::query(), 'is_active')->pluck('name')->all();
 
-    expect($query->toRawSql())
-        ->toContain("JSON_EXTRACT(users.is_active, '$.en')")
-        ->toContain('= 1');
+    expect($results)->toBe(['Alice', 'Charlie']);
 });
 
-it('is true operator generates inverse SQL for is false', function () {
+it('is true operator inverse filters falsy records', function () {
     $operator = TranslatableIsTrueOperator::make()
         ->settings(['locale' => 'en'])
         ->inverse();
 
-    $query = $operator->apply(User::query(), 'users.is_active');
+    $results = $operator->apply(User::query(), 'is_active')->pluck('name')->all();
 
-    expect($query->toRawSql())
-        ->toContain("JSON_EXTRACT(users.is_active, '$.en')")
-        ->toContain('= 0');
+    expect($results)->toBe(['Bob']);
 });
 
 it('text operators include locale form field', function () {
@@ -155,25 +141,23 @@ it('boolean operator includes locale form field', function () {
 
 it('trims whitespace from text operator input', function () {
     $operator = TranslatableContainsOperator::make()
-        ->settings(['locale' => 'en', 'text' => '  hello  ']);
+        ->settings(['locale' => 'en', 'text' => '  Hello  ']);
 
-    $query = $operator->apply(User::query(), 'users.title');
+    $results = $operator->apply(User::query(), 'title')->pluck('name')->all();
 
-    expect($query->toRawSql())
-        ->toContain("like '%hello%'")
-        ->not->toContain("like '%  hello  %'");
+    expect($results)->toBe(['Alice', 'Charlie']);
 });
 
-it('uses different locale in JSON path', function () {
-    $operatorEn = TranslatableEqualsOperator::make()
-        ->settings(['locale' => 'en', 'text' => 'Hello']);
+it('queries the correct locale', function () {
+    $operatorEn = TranslatableIsTrueOperator::make()
+        ->settings(['locale' => 'en']);
 
-    $operatorNl = TranslatableEqualsOperator::make()
-        ->settings(['locale' => 'nl', 'text' => 'Hallo']);
+    $operatorNl = TranslatableIsTrueOperator::make()
+        ->settings(['locale' => 'nl']);
 
-    $queryEn = $operatorEn->apply(User::query(), 'users.title');
-    $queryNl = $operatorNl->apply(User::query(), 'users.title');
+    $resultsEn = $operatorEn->apply(User::query(), 'is_active')->pluck('name')->all();
+    $resultsNl = $operatorNl->apply(User::query(), 'is_active')->pluck('name')->all();
 
-    expect($queryEn->toRawSql())->toContain("'$.en'");
-    expect($queryNl->toRawSql())->toContain("'$.nl'");
+    expect($resultsEn)->toBe(['Alice', 'Charlie']);
+    expect($resultsNl)->toBe(['Bob', 'Charlie']);
 });

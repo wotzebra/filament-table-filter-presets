@@ -29,7 +29,7 @@ class TranslatableEqualsOperator extends EqualsOperator
         $text = trim($this->getSettings()['text']);
 
         return $query->{$this->isInverse() ? 'whereNot' : 'where'}(
-            $this->getTranslatableExpression($qualifiedColumn),
+            $this->getTranslatableColumn($qualifiedColumn),
             $text,
         );
     }

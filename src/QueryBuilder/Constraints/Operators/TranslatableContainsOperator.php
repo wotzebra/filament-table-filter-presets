@@ -29,7 +29,7 @@ class TranslatableContainsOperator extends ContainsOperator
         $text = trim($this->getSettings()['text']);
 
         return $query->{$this->isInverse() ? 'whereNot' : 'where'}(
-            $this->getTranslatableExpression($qualifiedColumn),
+            $this->getTranslatableColumn($qualifiedColumn),
             'like',
             "%{$text}%",
         );

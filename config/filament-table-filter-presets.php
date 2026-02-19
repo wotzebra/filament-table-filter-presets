@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Administrator;
+use Illuminate\Foundation\Auth\User;
 
 return [
-    'administrator_model' => Administrator::class,
+    'administrator_model' => User::class,
 ];

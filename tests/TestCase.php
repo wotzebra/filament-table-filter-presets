@@ -71,6 +71,8 @@ class TestCase extends Orchestra
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->json('title')->nullable();
+            $table->json('is_active')->nullable();
             $table->timestamps();
         });
 

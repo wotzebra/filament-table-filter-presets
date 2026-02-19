@@ -3,8 +3,6 @@
 namespace Wotz\FilamentTableFilterPresets\QueryBuilder\Constraints\Concerns;
 
 use Filament\Forms\Components\Select;
-use Illuminate\Database\Query\Expression;
-use Illuminate\Support\Facades\DB;
 use Wotz\LocaleCollection\Facades\LocaleCollection;
 
 trait QueriesTranslatableColumn
@@ -20,17 +18,10 @@ trait QueriesTranslatableColumn
             ->required();
     }
 
-    protected function getTranslatableExpression(string $qualifiedColumn): Expression
+    protected function getTranslatableColumn(string $qualifiedColumn): string
     {
         $locale = $this->getSettings()['locale'];
 
-        return DB::raw("JSON_UNQUOTE(JSON_EXTRACT({$qualifiedColumn}, '$.{$locale}'))");
-    }
-
-    protected function getTranslatableBooleanExpression(string $qualifiedColumn): Expression
-    {
-        $locale = $this->getSettings()['locale'];
-
-        return DB::raw("JSON_EXTRACT({$qualifiedColumn}, '$.{$locale}')");
+        return "{$qualifiedColumn}->{$locale}";
     }
 }

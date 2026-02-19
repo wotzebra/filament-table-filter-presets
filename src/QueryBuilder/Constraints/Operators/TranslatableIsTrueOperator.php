@@ -23,7 +23,7 @@ class TranslatableIsTrueOperator extends IsTrueOperator
     public function apply(Builder $query, string $qualifiedColumn): Builder
     {
         return $query->where(
-            $this->getTranslatableBooleanExpression($qualifiedColumn),
+            $this->getTranslatableColumn($qualifiedColumn),
             ! $this->isInverse(),
         );
     }

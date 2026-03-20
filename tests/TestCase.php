@@ -16,7 +16,6 @@ use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
-use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 use Workbench\App\Providers\Filament\AdminPanelProvider;
 use Wotz\FilamentTableFilterPresets\FilamentTableFilterPresetsServiceProvider;
 use Wotz\LocaleCollection\Providers\LocaleCollectionServiceProvider;
@@ -37,7 +36,6 @@ class TestCase extends Orchestra
         $providers = [
             BladeHeroiconsServiceProvider::class,
             BladeIconsServiceProvider::class,
-            BladeCaptureDirectiveServiceProvider::class,
             LivewireServiceProvider::class,
             SupportServiceProvider::class,
             FilamentServiceProvider::class,

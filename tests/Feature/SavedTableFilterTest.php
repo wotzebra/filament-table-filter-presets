@@ -2,6 +2,7 @@
 
 use Filament\Facades\Filament;
 use Livewire\Livewire;
+use Workbench\App\Filament\Resources\UserResource;
 use Workbench\App\Filament\Resources\UserResource\Pages\ListUsers;
 use Workbench\App\Models\User;
 use Wotz\FilamentTableFilterPresets\Models\SavedTableFilter;
@@ -46,7 +47,7 @@ it('can save a filter preset as default', function () {
 it('clears previous default when saving a new default filter', function () {
     $existing = SavedTableFilter::factory()->default()->create([
         'administrator_id' => $this->admin->id,
-        'resource' => \Workbench\App\Filament\Resources\UserResource::class,
+        'resource' => UserResource::class,
     ]);
 
     Livewire::test(ListUsers::class)
@@ -69,7 +70,7 @@ it('can load a saved filter preset', function () {
 
     $savedFilter = SavedTableFilter::factory()->create([
         'administrator_id' => $this->admin->id,
-        'resource' => \Workbench\App\Filament\Resources\UserResource::class,
+        'resource' => UserResource::class,
         'filters' => $filterState,
     ]);
 
@@ -83,7 +84,7 @@ it('can load a saved filter preset', function () {
 it('can delete a saved filter preset', function () {
     $savedFilter = SavedTableFilter::factory()->create([
         'administrator_id' => $this->admin->id,
-        'resource' => \Workbench\App\Filament\Resources\UserResource::class,
+        'resource' => UserResource::class,
     ]);
 
     Livewire::test(ListUsers::class)
@@ -100,7 +101,7 @@ it('can delete a saved filter preset', function () {
 it('auto-applies default filter on mount', function () {
     SavedTableFilter::factory()->default()->create([
         'administrator_id' => $this->admin->id,
-        'resource' => \Workbench\App\Filament\Resources\UserResource::class,
+        'resource' => UserResource::class,
         'filters' => ['status' => ['value' => 'active']],
     ]);
 
@@ -118,7 +119,7 @@ it('scopes filters per user', function () {
     SavedTableFilter::factory()->create([
         'administrator_id' => $otherUser->id,
         'name' => 'Other User Filter',
-        'resource' => \Workbench\App\Filament\Resources\UserResource::class,
+        'resource' => UserResource::class,
     ]);
 
     $currentUserFilters = SavedTableFilter::query()
@@ -133,7 +134,7 @@ it('enforces unique constraint on name per user and resource', function () {
     SavedTableFilter::factory()->create([
         'administrator_id' => $this->admin->id,
         'name' => 'Duplicate Name',
-        'resource' => \Workbench\App\Filament\Resources\UserResource::class,
+        'resource' => UserResource::class,
     ]);
 
     Livewire::test(ListUsers::class)
@@ -153,7 +154,7 @@ it('enforces unique constraint on name per user and resource', function () {
 it('belongs to an administrator', function () {
     $savedFilter = SavedTableFilter::factory()->create([
         'administrator_id' => $this->admin->id,
-        'resource' => \Workbench\App\Filament\Resources\UserResource::class,
+        'resource' => UserResource::class,
     ]);
 
     expect($savedFilter->administrator)

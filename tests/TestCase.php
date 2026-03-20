@@ -16,6 +16,7 @@ use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Workbench\App\Models\User;
 use Workbench\App\Providers\Filament\AdminPanelProvider;
 use Wotz\FilamentTableFilterPresets\FilamentTableFilterPresetsServiceProvider;
 use Wotz\LocaleCollection\Providers\LocaleCollectionServiceProvider;
@@ -62,8 +63,8 @@ class TestCase extends Orchestra
         config()->set('database.default', 'testing');
         config()->set('cache.default', 'array');
         config()->set('session.driver', 'array');
-        config()->set('filament-table-filter-presets.administrator_model', \Workbench\App\Models\User::class);
-        config()->set('auth.providers.users.model', \Workbench\App\Models\User::class);
+        config()->set('filament-table-filter-presets.administrator_model', User::class);
+        config()->set('auth.providers.users.model', User::class);
 
         $app['db']->connection()->getSchemaBuilder()->create('users', function ($table) {
             $table->id();

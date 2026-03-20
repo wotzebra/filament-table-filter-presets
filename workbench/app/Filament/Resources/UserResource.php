@@ -5,6 +5,7 @@ namespace Workbench\App\Filament\Resources;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Workbench\App\Filament\Resources\UserResource\Pages\ListUsers;
 use Workbench\App\Models\User;
 
 class UserResource extends Resource
@@ -23,7 +24,7 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \Workbench\App\Filament\Resources\UserResource\Pages\ListUsers::route('/'),
+            'index' => ListUsers::route('/'),
         ];
     }
 }

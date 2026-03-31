@@ -4,6 +4,7 @@ namespace Workbench\App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Workbench\Database\Factories\UserFactory;
 
 class User extends Authenticatable
 {
@@ -25,8 +26,8 @@ class User extends Authenticatable
         ];
     }
 
-    protected static function newFactory(): \Workbench\Database\Factories\UserFactory
+    protected static function newFactory(): UserFactory
     {
-        return \Workbench\Database\Factories\UserFactory::new();
+        return UserFactory::new();
     }
 }

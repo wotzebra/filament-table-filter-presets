@@ -1,13 +1,13 @@
 <?php
 
 return [
-    'actions' => 'Filteracties',
-    'save' => 'Filter opslaan',
-    'load' => 'Filter laden',
-    'delete' => 'Filter verwijderen',
-    'saved_filter' => 'Opgeslagen filter',
+    'actions' => 'Presetacties',
+    'save' => 'Preset opslaan',
+    'load' => 'Preset laden',
+    'delete' => 'Preset verwijderen',
+    'saved_filter' => 'Opgeslagen preset',
     'name' => 'Naam',
     'set_as_default' => 'Instellen als standaard',
-    'filter_saved' => 'Filter opgeslagen',
-    'filter_deleted' => 'Filter verwijderd',
+    'filter_saved' => 'Preset opgeslagen',
+    'filter_deleted' => 'Preset verwijderd',
 ];

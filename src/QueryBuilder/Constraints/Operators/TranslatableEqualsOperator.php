@@ -4,6 +4,7 @@ namespace Wotz\FilamentTableFilterPresets\QueryBuilder\Constraints\Operators;
 
 use Filament\Forms\Components\TextInput;
 use Filament\QueryBuilder\Constraints\TextConstraint\Operators\EqualsOperator;
+use Filament\Schemas\Components\Component;
 use Illuminate\Database\Eloquent\Builder;
 use Wotz\FilamentTableFilterPresets\QueryBuilder\Constraints\Concerns\QueriesTranslatableColumn;
 
@@ -12,7 +13,7 @@ class TranslatableEqualsOperator extends EqualsOperator
     use QueriesTranslatableColumn;
 
     /**
-     * @return array<\Filament\Schemas\Components\Component>
+     * @return array<Component>
      */
     public function getFormSchema(): array
     {

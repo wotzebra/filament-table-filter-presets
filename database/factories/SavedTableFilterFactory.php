@@ -18,6 +18,7 @@ class SavedTableFilterFactory extends Factory
             'resource' => null,
             'name' => fake()->unique()->words(2, true),
             'filters' => [],
+            'columns' => [],
             'is_default' => false,
         ];
     }

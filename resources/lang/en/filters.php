@@ -1,13 +1,13 @@
 <?php
 
 return [
-    'actions' => 'Filter actions',
-    'save' => 'Save Filter',
-    'load' => 'Load Filter',
-    'delete' => 'Delete Filter',
-    'saved_filter' => 'Saved Filter',
+    'actions' => 'Preset actions',
+    'save' => 'Save Preset',
+    'load' => 'Load Preset',
+    'delete' => 'Delete Preset',
+    'saved_filter' => 'Saved Preset',
     'name' => 'Name',
     'set_as_default' => 'Set as default',
-    'filter_saved' => 'Filter saved',
-    'filter_deleted' => 'Filter deleted',
+    'filter_saved' => 'Preset saved',
+    'filter_deleted' => 'Preset deleted',
 ];

@@ -16,6 +16,7 @@ class SavedTableFilter extends Model
         'resource',
         'name',
         'filters',
+        'columns',
         'is_default',
     ];
 
@@ -23,6 +24,7 @@ class SavedTableFilter extends Model
     {
         return [
             'filters' => 'json',
+            'columns' => 'json',
             'is_default' => 'boolean',
         ];
     }

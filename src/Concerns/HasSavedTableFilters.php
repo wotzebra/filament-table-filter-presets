@@ -19,6 +19,10 @@ trait HasSavedTableFilters
 
         if ($default) {
             $this->tableFilters = $default->filters;
+
+            if ($default->columns) {
+                $this->applyTableColumnManager($default->columns);
+            }
         }
     }
 
@@ -42,13 +46,21 @@ trait HasSavedTableFilters
      * Uses Livewire's SPA navigation for a seamless experience.
      *
      * @param  array<string, mixed>  $filters
+     * @param  array<int, mixed>|null  $columns
      */
-    protected function applySavedFilterState(array $filters): void
+    protected function applySavedFilterState(array $filters, ?array $columns = null): void
     {
         session()->put(
             $this->getTableFiltersSessionKey(),
             $filters,
         );
+
+        if ($columns) {
+            session()->put(
+                $this->getTableColumnsSessionKey(),
+                $columns,
+            );
+        }
 
         $this->redirect(static::getUrl(), navigate: true);
     }
@@ -96,6 +108,7 @@ trait HasSavedTableFilters
                     ],
                     [
                         'filters' => $this->tableFilters ?? [],
+                        'columns' => $this->tableColumns ?? [],
                         'is_default' => $data['is_default'],
                     ],
                 );
@@ -127,7 +140,7 @@ trait HasSavedTableFilters
                     ->first();
 
                 if ($filter) {
-                    $this->applySavedFilterState($filter->filters);
+                    $this->applySavedFilterState($filter->filters, $filter->columns);
                 }
             });
     }

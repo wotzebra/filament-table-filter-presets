@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('resource');
             $table->string('name');
             $table->json('filters');
+            $table->json('columns')->nullable();
             $table->boolean('is_default')->default(false);
             $table->timestamps();
 

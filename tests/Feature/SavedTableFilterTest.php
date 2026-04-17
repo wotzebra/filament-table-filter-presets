@@ -20,7 +20,7 @@ it('can save a filter preset', function () {
             'name' => 'My Test Filter',
             'is_default' => false,
         ])
-        ->assertNotified('Filter saved');
+        ->assertNotified('Preset saved');
 
     $this->assertDatabaseHas('saved_table_filters', [
         'administrator_id' => $this->admin->id,
@@ -35,7 +35,7 @@ it('can save a filter preset as default', function () {
             'name' => 'Default Filter',
             'is_default' => true,
         ])
-        ->assertNotified('Filter saved');
+        ->assertNotified('Preset saved');
 
     $this->assertDatabaseHas('saved_table_filters', [
         'administrator_id' => $this->admin->id,
@@ -55,7 +55,7 @@ it('clears previous default when saving a new default filter', function () {
             'name' => 'New Default',
             'is_default' => true,
         ])
-        ->assertNotified('Filter saved');
+        ->assertNotified('Preset saved');
 
     expect($existing->fresh()->is_default)->toBeFalse();
 
@@ -91,7 +91,7 @@ it('can delete a saved filter preset', function () {
         ->callAction('deleteFilter', [
             'saved_filter_id' => $savedFilter->id,
         ])
-        ->assertNotified('Filter deleted');
+        ->assertNotified('Preset deleted');
 
     $this->assertDatabaseMissing('saved_table_filters', [
         'id' => $savedFilter->id,
@@ -142,7 +142,7 @@ it('enforces unique constraint on name per user and resource', function () {
             'name' => 'Duplicate Name',
             'is_default' => false,
         ])
-        ->assertNotified('Filter saved');
+        ->assertNotified('Preset saved');
 
     expect(SavedTableFilter::query()
         ->where('administrator_id', $this->admin->id)

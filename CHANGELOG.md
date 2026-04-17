@@ -2,6 +2,19 @@
 
 All notable changes to `filament-table-filter-presets` will be documented in this file.
 
+## v0.5.0 - 2026-04-17
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.5.0 to 3.0.0 by @dependabot[bot] in https://github.com/wotzebra/filament-table-filter-presets/pull/7
+* Add PHP 8.5 / Laravel 13 support by @Copilot in https://github.com/wotzebra/filament-table-filter-presets/pull/5
+
+### New Contributors
+
+* @Copilot made their first contribution in https://github.com/wotzebra/filament-table-filter-presets/pull/5
+
+**Full Changelog**: https://github.com/wotzebra/filament-table-filter-presets/compare/v0.4.0...v0.5.0
+
 ## v0.4.0 - 2026-03-31
 
 ### What's Changed

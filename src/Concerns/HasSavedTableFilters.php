@@ -9,6 +9,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
+use Filament\Support\Icons\Heroicon;
 use Wotz\FilamentTableFilterPresets\Models\SavedTableFilter;
 
 trait HasSavedTableFilters
@@ -73,8 +74,10 @@ trait HasSavedTableFilters
             $this->getDeleteFilterAction(),
         ])
             ->button()
+            // Utility menu, not the page's primary action — that is "New <record>".
+            ->color('gray')
             ->label(__('filament-table-filter-presets::filters.actions'))
-            ->icon('heroicon-m-ellipsis-vertical');
+            ->icon(Heroicon::EllipsisVertical);
     }
 
     protected function getSavedFilterAction(): Action

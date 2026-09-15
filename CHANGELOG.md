@@ -2,6 +2,16 @@
 
 All notable changes to `filament-table-filter-presets` will be documented in this file.
 
+## v0.6.0 - 2026-09-15
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 3.0.0 to 3.1.0 by @dependabot[bot] in https://github.com/wotzebra/filament-table-filter-presets/pull/8
+* Bump actions/checkout from 6 to 7 by @dependabot[bot] in https://github.com/wotzebra/filament-table-filter-presets/pull/9
+* Render the preset actions menu as a secondary button by @jyrkidn in https://github.com/wotzebra/filament-table-filter-presets/pull/10
+
+**Full Changelog**: https://github.com/wotzebra/filament-table-filter-presets/compare/v0.5.0...v0.6.0
+
 ## v0.5.0 - 2026-04-17
 
 ### What's Changed
